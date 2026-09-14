@@ -60,17 +60,24 @@ int main(int argc, char** argv) {
     }
 
     try {
+        // Le lecteur masque les details des blocs PCAPNG et fournit un paquet
+        // complet a chaque appel a next().
         pcapng::PcapNgReader reader(argv[1]);
         pcapng::Packet pkt;
         size_t seen = 0, beacons = 0, idFrames = 0;
 
         while (reader.next(pkt)) {
             ++seen;
+            // Une trame Ethernet ou une trame 802.11 non-beacon est ignoree
+            // avant toute recherche de donnees constructeur.
             auto beacon = wlan::parseBeacon(pkt.data.data(),
                                             pkt.data.size(),
                                             pkt.linkType);
             if (!beacon) continue;
             ++beacons;
+
+            // Un beacon peut contenir plusieurs IE constructeur ; seul celui
+            // dont l'OUI et le type correspondent est decode en InfoDrone.
             for (const auto& ie : beacon->vendorIes) {
                 if (!infodrone::isInfoDrone(ie)) continue;
                 auto f = infodrone::decode(ie);

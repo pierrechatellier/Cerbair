@@ -4,6 +4,7 @@
 namespace idp::infodrone {
 
 bool isInfoDrone(const wlan::VendorSpecificIe& ie) {
+    // L'OUI et le type forment la signature de l'IE constructeur InfoDrone.
     return ie.oui[0] == kOui[0]
         && ie.oui[1] == kOui[1]
         && ie.oui[2] == kOui[2]
@@ -14,6 +15,8 @@ namespace {
 void decodeTlv(Frame& f, uint8_t type, const uint8_t* v, uint8_t len) {
     ByteReader r(v, len, /*littleEndian=*/true);
 
+    // Chaque type possede une longueur attendue ; une longueur incorrecte
+    // produit un avertissement sans interrompre le decodage des autres TLV.
     switch (type) {
     case 0x01:
         if (len == 1) f.version = r.u8();
@@ -74,6 +77,8 @@ Frame decode(const wlan::VendorSpecificIe& ie) {
     size_t         i = 0;
 
     while (i + 2 <= n) {
+        // Le payload est une suite [type][longueur][valeur]. La verification
+        // avant decode evite toute lecture au-dela du payload capture.
         const uint8_t t   = p[i];
         const uint8_t len = p[i + 1];
         i += 2;

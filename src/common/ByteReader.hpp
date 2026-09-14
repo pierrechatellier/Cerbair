@@ -68,6 +68,8 @@ public:
 private:
     template <typename T>
     T readInt(size_t n) {
+        // La construction octet par octet evite de dependre de
+        // l'architecture de la machine qui execute le parseur.
         require(n);
         T v = 0;
         if (le_) {
@@ -81,6 +83,7 @@ private:
         return v;
     }
     void require(size_t n) const {
+        // Toutes les lectures passent par ce garde-fou avant d'avancer pos_.
         if (pos_ + n > size_)
             throw ParseError("ByteReader: out-of-bounds read");
     }
