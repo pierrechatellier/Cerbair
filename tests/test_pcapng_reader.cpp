@@ -59,7 +59,7 @@ TEST_CASE("pcapng: read one EPB") {
 
 TEST_CASE("pcapng: corrupted length trailer throws") {
     auto bytes = buildMinimalPcapng();
-    bytes.back() = 0x00;
+    bytes[bytes.size() - 4] = 0x00;
     std::string s(bytes.begin(), bytes.end());
     std::istringstream in(s);
 

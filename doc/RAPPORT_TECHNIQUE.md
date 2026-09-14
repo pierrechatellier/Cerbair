@@ -254,12 +254,9 @@ Les priorités seraient :
 6. ajouter CPack/CI Debian et un build reproductible ;
 7. introduire un modèle de signalement commun et des plugins Bluetooth/4G.
 
-La validation actuelle du build déjà présent montre 13 tests passants sur 15.
-Deux tests existants échouent : `ByteReader little-endian` attend une valeur
-qui ne correspond pas aux octets réellement consommés après `u8()` et `u16()`,
-et `pcapng: corrupted length trailer throws` ne déclenche pas l'exception
-attendue. Ces échecs doivent être corrigés ou clarifiés avant de considérer
-la CI comme verte ; ils ne doivent pas être masqués par le rapport.
+La validation du build couvre notamment l'endianness de `ByteReader`, les
+lectures hors limites et la validation des longueurs PCAPNG, y compris les
+remorques de longueur corrompues.
 
 ## 7. Vision lead : organisation en équipe
 
