@@ -14,7 +14,9 @@ add_library(infodrone_core STATIC
   src/wlan/WlanFrame.cpp
   src/infodrone/InfoDroneDecoder.cpp
 )
+
 target_include_directories(infodrone_core PUBLIC src)
+
 if(MSVC)
   # Use MSVC warning level 4 instead of GCC/Clang -W flags
   target_compile_options(infodrone_core PRIVATE /W4)
@@ -26,6 +28,7 @@ add_executable(infodroneParser src/main.cpp)
 target_link_libraries(infodroneParser PRIVATE infodrone_core)
 
 option(BUILD_TESTING "Build unit tests" ON)
+
 if(BUILD_TESTING)
   enable_testing()
   include(FetchContent)
@@ -34,6 +37,7 @@ if(BUILD_TESTING)
     GIT_REPOSITORY https://github.com/catchorg/Catch2.git
     GIT_TAG        v3.5.2
   )
+
   FetchContent_MakeAvailable(Catch2)
 
   add_executable(infodrone_tests
@@ -42,6 +46,7 @@ if(BUILD_TESTING)
     tests/test_infodrone.cpp
     tests/test_pcapng_reader.cpp
   )
+  
   target_link_libraries(infodrone_tests
     PRIVATE infodrone_core Catch2::Catch2WithMain)
 

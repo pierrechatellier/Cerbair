@@ -1,10 +1,11 @@
 #include <catch2/catch_test_macros.hpp>
+
 #include "common/ByteReader.hpp"
 
 TEST_CASE("ByteReader little-endian") {
     uint8_t buf[7] = {0x01, 0x02, 0x03, 0xAA, 0xBB, 0xCC, 0xDD};
     idp::ByteReader r(buf, sizeof(buf), true);
-    REQUIRE(r.u8()  == 0x01);
+    REQUIRE(r.u8() == 0x01);
     REQUIRE(r.u16() == 0x0302);
     REQUIRE(r.u32() == 0xDDCCBBAA);
     REQUIRE(r.remaining() == 0);
