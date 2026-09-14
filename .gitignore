@@ -1,0 +1,23 @@
+/build/
+/out/
+/.vs/
+/third_party/catch2/
+*.deb
+*.o
+*.a
+
+# CMake-generated files
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+CTestTestfile.cmake
+Makefile
+compile_commands.json
+
+# Visual Studio generated files
+*.user
+*.suo
+*.vcxproj*
+*.pdb
+*.ilk
+*.ipch
