@@ -8,13 +8,14 @@ pour captures pcapng contenant des beacons 802.11 Anafi.
     cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
     cmake --build build --config Release --parallel
 
-Avec le générateur Visual Studio (multi-configuration), `CMAKE_BUILD_TYPE` est
-ignoré lors de la compilation. Il faut donc préciser `--config Release` à
-`cmake --build` ; sinon Visual Studio utilise généralement `Debug` par défaut.
+Avec le générateur Visual Studio (multi-configuration), `CMAKE_BUILD_TYPE` ne
+choisit pas la configuration de compilation. Il faut donc obligatoirement
+préciser `--config Release` à `cmake --build` ; sinon Visual Studio demande
+généralement la configuration Debug par défaut.
 
 ## Exécution
 
-    ./build/Release/infodroneParser /chemin/capture.pcapng
+    ./build/Release/infodroneParser ../../resourses/anafi-infodrone.pcapng
 
 ## Tests
 
