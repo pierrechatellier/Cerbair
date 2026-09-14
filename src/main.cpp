@@ -8,6 +8,12 @@
 
 using namespace idp;
 
+/**
+ * @brief Affiche une trame InfoDrone et les metadonnees de son beacon Wi-Fi.
+ * @param f Donnees InfoDrone decodees depuis l'IE constructeur.
+ * @param b Beacon 802.11 qui transportait l'IE.
+ * @param tsNs Horodatage de capture en nanosecondes.
+ */
 static void printFrame(const infodrone::Frame& f,
                        const wlan::Beacon& b,
                        uint64_t tsNs)
@@ -36,6 +42,17 @@ static void printFrame(const infodrone::Frame& f,
         std::cout << "  [warn] " << w << "\n";
 }
 
+/**
+ * @brief Point d'entree du parseur de captures PCAPNG.
+ *
+ * Le programme extrait les beacons 802.11, recherche les IE constructeur
+ * InfoDrone, decode leurs TLV puis affiche les trames reconnues.
+ *
+ * @param argc Nombre d'arguments de la ligne de commande.
+ * @param argv Arguments ; argv[1] doit contenir le chemin d'un fichier PCAPNG.
+ * @return 0 en cas de succes, 1 si les arguments sont invalides, 2 en cas
+ *         d'erreur de lecture ou de decodage.
+ */
 int main(int argc, char** argv) {
     if (argc != 2) {
         std::cerr << "Usage: " << argv[0] << " <file.pcapng>\n";

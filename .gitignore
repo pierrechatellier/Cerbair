@@ -21,3 +21,4 @@ compile_commands.json
 *.pdb
 *.ilk
 *.ipch
+/x64/*
